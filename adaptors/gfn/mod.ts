@@ -2,17 +2,24 @@ import jsdom from "https://dev.jspm.io/jsdom";
 import { Feed } from "../../models/Feed.ts";
 import { Game, Action } from "./models/Game.ts";
 import { connect } from "https://denopkg.com/keroxp/deno-redis/mod.ts";
-import { config } from "https://deno.land/x/dotenv/mod.ts";
+import "https://deno.land/x/dotenv/load.ts";
 
-const {
-  REDIS_HOST,
-  REDIS_PORT,
-} = config();
+let REDIS_HOST = Deno.env.get("REDIS_HOST") || "127.0.0.1";
+let REDIS_PORT = Deno.env.get("REDIS_PORT") || 6379;
+let REDIS_PASSWORD = Deno.env.get("REDIS_PASSWORD");
+const REDIS_URL = Deno.env.get("REDIS_URL");
 
-// TODO : read from env var
+if (REDIS_URL) {
+  const { hostname, port, password } = new URL(REDIS_URL);
+  REDIS_HOST = hostname;
+  REDIS_PORT = port;
+  REDIS_PASSWORD = password;
+}
+
 const redis = await connect({
-  hostname: "127.0.0.1",
-  port: 6379,
+  hostname: REDIS_HOST,
+  port: REDIS_PORT,
+  password: REDIS_PASSWORD,
 });
 
 type GameList = Array<Feed<Game>>;
