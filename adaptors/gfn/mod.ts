@@ -2,7 +2,14 @@ import jsdom from "https://dev.jspm.io/jsdom";
 import { Feed } from "../../models/Feed.ts";
 import { Game, Action } from "./models/Game.ts";
 import { connect } from "https://denopkg.com/keroxp/deno-redis/mod.ts";
+import { config } from "https://deno.land/x/dotenv/mod.ts";
 
+const {
+  REDIS_HOST,
+  REDIS_PORT,
+} = config();
+
+// TODO : read from env var
 const redis = await connect({
   hostname: "127.0.0.1",
   port: 6379,

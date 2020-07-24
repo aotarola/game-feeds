@@ -1,7 +1,6 @@
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 
-const TELEGRAM_BOT_TOKEN = config()["TELEGRAM_BOT_TOKEN"];
-const TELEGRAM_CHAT_GID = config()["TELEGRAM_CHAT_GID"];
+const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_GID } = config();
 
 export function sendNotification(message: string | undefined) {
   if (!message || message == "") {
