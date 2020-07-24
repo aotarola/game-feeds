@@ -1,6 +1,12 @@
 import jsdom from "https://dev.jspm.io/jsdom";
 import { Feed } from "../../models/Feed.ts";
 import { Game, Action } from "./models/Game.ts";
+import { connect } from "https://denopkg.com/keroxp/deno-redis/mod.ts";
+
+const redis = await connect({
+  hostname: "127.0.0.1",
+  port: 6379,
+});
 
 type GameList = Array<Feed<Game>>;
 
@@ -26,17 +32,24 @@ function extractData(document: any) {
   return data;
 }
 
-function getNewestData(lastKownDate: string, games: GameList): GameList {
+async function getNewestData(
+  lastRun: string | undefined,
+  games: GameList,
+): Promise<GameList> {
+  if (games.length > 0) {
+    const [latest] = games;
+    await redis.set("gfn:lastrun", latest.date);
+  }
   for (let i = 0; i < games.length; i++) {
     const { date } = games[i];
-    if (date == lastKownDate) {
+    if (date == lastRun) {
       return games.slice(0, i);
     }
   }
   return games;
 }
 
-export default async function run(lastKownDate: string) {
+export default async function run() {
   const response = await fetch(
     "https://geforcenow-games.com/en/changelog",
     {
@@ -54,5 +67,6 @@ export default async function run(lastKownDate: string) {
     body.replaceAll(RE, ""),
     { url: "https://geforcenow-games.com/en/changelog" },
   ).window;
-  return getNewestData(lastKownDate, extractData(document));
+  const lastRun = await redis.get("gfn:lastrun");
+  return getNewestData(lastRun, extractData(document));
 }
