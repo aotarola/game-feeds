@@ -1,8 +1,6 @@
 import { BaseGame } from "../../../models/BaseGame.ts";
 import { Feed } from "../../../models/Feed.ts";
 
-export type GameList = Array<Feed<Game>>;
-
 export enum Action {
   Added = 1,
   Removed = 2,
@@ -12,3 +10,5 @@ export enum Action {
 export interface Game extends BaseGame {
   action: Action;
 }
+
+export type GameList = Array<Feed<Game>>;
