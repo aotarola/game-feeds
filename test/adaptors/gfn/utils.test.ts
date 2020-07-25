@@ -7,46 +7,24 @@ import {
 Deno.test("return empty string for empty game feed", () =>
   assertEquals(formatMessage([]), ""));
 
-Deno.test("return message with ✅ when for a game is added", () => {
-  const gamesFeed = [{
-    date: "some date",
-    games: [{
-      action: Action.Added,
-      name: "some game",
-    }],
-  }];
-  assertEquals(
-    formatMessage(gamesFeed),
-    "Geforce Now updates for **some date**:\n✅ some game",
-  );
-});
-
-Deno.test("return message with ❌ when for a game is removed", () => {
-  const gamesFeed = [{
-    date: "some date",
-    games: [{
-      action: Action.Removed,
-      name: "some game",
-    }],
-  }];
-  assertEquals(
-    formatMessage(gamesFeed),
-    "Geforce Now updates for **some date**:\n❌ some game",
-  );
-});
-
-Deno.test("return message with 🎉 when for a game is coming soon", () => {
-  const gamesFeed = [{
-    date: "some date",
-    games: [{
-      action: Action.ComingSoon,
-      name: "some game",
-    }],
-  }];
-  assertEquals(
-    formatMessage(gamesFeed),
-    "Geforce Now updates for **some date**:\n🎉 some game",
-  );
+[
+  { action: Action.Added, emoji: "✅" },
+  { action: Action.Removed, emoji: "❌" },
+  { action: Action.ComingSoon, emoji: "🎉" },
+].forEach(({ action, emoji }) => {
+  Deno.test(`return message with ${emoji}`, () => {
+    const gamesFeed = [{
+      date: "some date",
+      games: [{
+        action,
+        name: "some game",
+      }],
+    }];
+    assertEquals(
+      formatMessage(gamesFeed),
+      `Geforce Now updates for **some date**:\n${emoji} some game`,
+    );
+  });
 });
 
 Deno.test("return message with special charactered escaped", () => {
