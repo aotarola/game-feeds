@@ -3,6 +3,7 @@ import { Feed } from "../../models/Feed.ts";
 import { Game, Action } from "./models/Game.ts";
 import { connect } from "https://denopkg.com/keroxp/deno-redis/mod.ts";
 import "https://deno.land/x/dotenv/load.ts";
+export * from "./utils.ts";
 
 let REDIS_HOST = Deno.env.get("REDIS_HOST") || "127.0.0.1";
 let REDIS_PORT = Deno.env.get("REDIS_PORT") || 6379;
@@ -83,35 +84,4 @@ export default async function run() {
   ).window;
   const lastRun = await redis.get("gfn:lastrun");
   return getNewestData(lastRun, extractData(document));
-}
-
-export function formatMessage(feed: GameList) {
-  function toEmoji(action: Action) {
-    switch (action) {
-      case Action.Added:
-        return "\u2705";
-
-      case Action.Removed:
-        return "\u274c";
-
-      default:
-        return "\u{1F389}";
-    }
-  }
-  const dotRex = /\./gi;
-  const dashRex = /-/gi;
-  return feed.map(({ date, games }) =>
-    `Geforce Now updates for **${date}**:\n${
-      games.map(({ action, name }) =>
-        `${toEmoji(action)} ${
-          name
-            .replaceAll(dashRex, "\\-")
-            .replace("(", "\\(")
-            .replace(")", "\\)")
-            .replace("!", "\\!")
-            .replaceAll(dotRex, "\\.")
-        }`
-      ).join("\n")
-    }`
-  ).join("\n");
 }
