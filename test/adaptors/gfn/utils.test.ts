@@ -48,3 +48,17 @@ Deno.test("return message with 🎉 when for a game is coming soon", () => {
     "Geforce Now updates for **some date**:\n🎉 some game",
   );
 });
+
+Deno.test("return message with special charactered escaped", () => {
+  const gamesFeed = [{
+    date: "some date",
+    games: [{
+      action: Action.Added,
+      name: "some game!. (some digital store)",
+    }],
+  }];
+  assertEquals(
+    formatMessage(gamesFeed),
+    "Geforce Now updates for **some date**:\n✅ some game\\!\\. \\(some digital store\\)",
+  );
+});
