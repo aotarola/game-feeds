@@ -1,5 +1,5 @@
-export interface Notifier {
-  (text?: string): undefined;
+interface sendNotification {
+  (text?: string): Promise<Response> | undefined;
 }
 
 export interface Cache {
@@ -8,10 +8,17 @@ export interface Cache {
 }
 
 interface AdaptorOptions {
-  notify?: Notifier;
+  notify?: sendNotification;
   cache?: Cache;
 }
 
+export interface Fetch {
+  (
+    input: string | Request | URL,
+    init?: RequestInit | undefined,
+  ): Promise<Response>;
+}
+
 export interface Adaptor {
-  (opts: AdaptorOptions): Promise<string | undefined>;
+  (opts: AdaptorOptions): Promise<Response | undefined>;
 }
