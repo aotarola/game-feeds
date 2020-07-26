@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
 
-      - run: deno -A test
+      - run: deno test --allow-read --allow-env
 
   deploy:
     executor: heroku/default
