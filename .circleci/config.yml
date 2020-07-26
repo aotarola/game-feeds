@@ -1,0 +1,32 @@
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.5
+  heroku: circleci/heroku@1.0.1
+jobs:
+  tests:
+    docker:
+      - image: hayd/alpine-deno:1.2.0
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run: deno -A test
+
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git
+
+workflows:
+  heroku_deploy:
+    jobs:
+      - tests
+      - deploy:
+          filters:
+            branches:
+              only: master
+          requires:
+            - tests
