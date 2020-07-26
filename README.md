@@ -84,7 +84,7 @@ $ deno test -A
 
 ## Authors
 
-* **Andres Otarola** - *Initial work* - [PurpleBooth](https://github.com/aotarola)
+* **Andres Otarola** - *Initial work* - [aotarola](https://github.com/aotarola)
 
 ## License
 
