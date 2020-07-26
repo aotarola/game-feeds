@@ -1,5 +1,5 @@
 export interface Notifier {
-  (message?: string): undefined;
+  (text?: string): undefined;
 }
 
 export interface Cache {

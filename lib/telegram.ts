@@ -3,7 +3,7 @@ import "https://deno.land/x/dotenv/load.ts";
 const TELEGRAM_BOT_TOKEN = Deno.env.get("TELEGRAM_BOT_TOKEN");
 const TELEGRAM_CHAT_GID = Deno.env.get("TELEGRAM_CHAT_GID");
 
-export function sendNotification(text: string | undefined) {
+export function sendNotification(text?: string) {
   if (!text || text == "") {
     return;
   }

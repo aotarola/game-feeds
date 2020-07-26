@@ -10,7 +10,7 @@ const UA =
 
 export const run: Adaptor = async (
   { cache, notify },
-): Promise<string | undefined> => {
+) => {
   const response = await fetch(
     GFN_URL,
     {
