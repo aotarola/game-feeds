@@ -1,5 +1,4 @@
-import "https://deno.land/x/dotenv/load.ts";
-import jsdom from "https://dev.jspm.io/jsdom";
+import { jsdom } from "../../deps.ts";
 import { extractData, getNewestData } from "./extractor.ts";
 import { formatMessage } from "./utils.ts";
 import { Adaptor } from "../../interfaces.ts";
@@ -23,12 +22,13 @@ export const run: Adaptor = async (
   const RE = /(<img.*?\/>)/sg;
 
   // @ts-ignore
-  const { document } = new jsdom.JSDOM(
+  const { document } = new jsdom.default.JSDOM(
     body.replaceAll(RE, ""),
     { url: GFN_URL },
   ).window;
 
   const newFeed = await getNewestData(extractData(document), cache);
+
   if (notify) {
     return notify(formatMessage(newFeed));
   }

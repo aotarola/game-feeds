@@ -1,7 +1,7 @@
 import Telegram from "./lib/telegram.ts";
 import requestCache from "./cache.ts";
 import { Adaptor } from "./interfaces.ts";
-import * as path from "https://deno.land/std@0.62.0/path/mod.ts";
+import { path } from "./deps.ts";
 
 async function main() {
   const __filename = path.fromFileUrl(import.meta.url);

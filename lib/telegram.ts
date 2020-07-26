@@ -1,4 +1,3 @@
-import "https://deno.land/x/dotenv/load.ts";
 import { Fetch } from "../interfaces.ts";
 const TELEGRAM_BOT_TOKEN = Deno.env.get("TELEGRAM_BOT_TOKEN");
 const TELEGRAM_CHAT_GID = Deno.env.get("TELEGRAM_CHAT_GID");
