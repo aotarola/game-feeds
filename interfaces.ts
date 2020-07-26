@@ -1,5 +1,5 @@
 interface sendNotification {
-  (text?: string): Promise<Response> | undefined;
+  (text?: string): Promise<Response | undefined>;
 }
 
 export interface Cache {

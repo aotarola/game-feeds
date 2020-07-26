@@ -1,7 +1,7 @@
 import { extractData, getNewestData } from "../../../adaptors/gfn/extractor.ts";
 import {
   assertEquals,
-} from "./deps.ts";
+} from "../../deps.ts";
 
 Deno.test("extractData: return empty list when no match is found", () => {
   const fakeDOM = {

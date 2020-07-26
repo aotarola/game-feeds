@@ -13,7 +13,7 @@ export default class Telegram {
     return new Telegram(fetch);
   }
 
-  sendNotification(text?: string) {
+  async sendNotification(text?: string) {
     if (!text || text == "") {
       return;
     }
