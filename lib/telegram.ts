@@ -1,6 +1,4 @@
 import { Fetch } from "../interfaces.ts";
-const TELEGRAM_BOT_TOKEN = Deno.env.get("TELEGRAM_BOT_TOKEN");
-const TELEGRAM_CHAT_GID = Deno.env.get("TELEGRAM_CHAT_GID");
 
 export default class Telegram {
   private fetch: Fetch;
@@ -14,6 +12,11 @@ export default class Telegram {
 
   async sendNotification(text?: string) {
     if (!text || text == "") {
+      return;
+    }
+    const TELEGRAM_BOT_TOKEN = Deno.env.get("TELEGRAM_BOT_TOKEN");
+    const TELEGRAM_CHAT_GID = Deno.env.get("TELEGRAM_CHAT_GID");
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_GID) {
       return;
     }
     return this.fetch(

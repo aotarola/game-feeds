@@ -24,3 +24,12 @@ Deno.test("Telegram#sendNotification: return a response when text is passed", as
     "ok",
   );
 });
+
+Deno.test("Telegram#sendNotification: return undefined when env vars are undefined", async () => {
+  Deno.env.delete("TELEGRAM_BOT_TOKEN");
+  Deno.env.delete("TELEGRAM_CHAT_GID");
+  assertEquals(
+    await sendNotification("kittens"),
+    undefined,
+  );
+});
