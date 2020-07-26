@@ -1,8 +1,10 @@
 import { formatMessage } from "../../../adaptors/gfn/utils.ts";
 import { Action } from "../../../adaptors/gfn/models/Game.ts";
 import {
-  assertEquals,
-} from "../../deps.ts";
+  testing,
+} from "../../../deps.ts";
+
+const { assertEquals } = testing;
 
 Deno.test("formatMessage: return empty string for empty game feed", () =>
   assertEquals(formatMessage([]), ""));

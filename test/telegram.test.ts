@@ -1,6 +1,8 @@
 import {
-  assertEquals,
-} from "./deps.ts";
+  testing,
+} from "../deps.ts";
+
+const { assertEquals } = testing;
 
 import Telegram from "../lib/telegram.ts";
 
