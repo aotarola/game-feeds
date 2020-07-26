@@ -1,16 +1,19 @@
 import Telegram from "./lib/telegram.ts";
 import requestCache from "./cache.ts";
 import { Adaptor } from "./interfaces.ts";
+import * as path from "https://deno.land/std@0.62.0/path/mod.ts";
+
+const __filename = path.fromFileUrl(import.meta.url);
 
 const adaptors: Array<Adaptor> = [];
-
+const ADAPTOR_PATH = path.join(`${__filename}`, "..", "adaptors");
 for await (
-  const key of Deno.readDir("/Users/aotarola/dev/games-feed/adaptors")
+  const key of Deno.readDir(ADAPTOR_PATH)
 ) {
   if (key.isDirectory) {
     adaptors.push(
       (await import(
-        `/Users/aotarola/dev/games-feed/adaptors/${key.name}/mod.ts`
+        path.join(ADAPTOR_PATH, key.name, "mod.ts")
       )).run,
     );
   }
