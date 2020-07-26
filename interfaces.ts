@@ -1,5 +1,5 @@
 export interface Notifier {
-  (message?: string): void;
+  (message?: string): undefined;
 }
 
 export interface Cache {
@@ -13,5 +13,5 @@ interface AdaptorOptions {
 }
 
 export interface Adaptor {
-  run(opts: AdaptorOptions): Promise<string | undefined>;
+  (opts: AdaptorOptions): Promise<string | undefined>;
 }
